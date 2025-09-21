@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Happy Birthday, My Love 💖</title>
+  <meta name="description" content="A cute, romantic birthday microsite" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&family=Pacifico&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg: #0f0f15;
+      --card: #171724;
+      --muted: #a9acc7;
+      --accent: #ff7cc8;
+      --accent-2: #7c8cff;
+      --accent-3: #ffd166;
+      --text: #f7f7fb;
+      --glass: rgba(255,255,255,0.06);
+      --radius: 22px;
+      --shadow: 0 10px 30px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.05);
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family:Poppins, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      color:var(--text); background: radial-gradient(1200px 800px at 80% -10%, #1a1a2f 0%, #0d0d16 60%, #0a0a12 100%), var(--bg);
+      overflow-x:hidden;
+    }
+
+    .stars{position:fixed; inset:0; pointer-events:none; z-index:0;}
+    .stars i{position:absolute; width:2px; height:2px; background:#fff; border-radius:50%; opacity:.6;}
+
+    header{
+      position:relative; z-index:2; padding:24px; display:flex; align-items:center; justify-content:space-between;
+    }
+    .brand{display:flex; gap:12px; align-items:center; font-weight:800; letter-spacing:.5px}
+    .brand .logo{width:36px; height:36px; border-radius:12px; background:linear-gradient(135deg,var(--accent),var(--accent-2)); display:grid; place-items:center; box-shadow:var(--shadow)}
+    .brand .logo svg{filter:drop-shadow(0 2px 6px rgba(0,0,0,.35))}
+
+    .music{
+      display:flex; gap:10px; align-items:center; backdrop-filter: blur(10px); background:var(--glass);
+      padding:8px 12px; border-radius:999px; border:1px solid rgba(255,255,255,.08);
+      box-shadow:var(--shadow)
+    }
+    .music button{all:unset; cursor:pointer; padding:6px 10px; border-radius:999px; background:linear-gradient(135deg, var(--accent), var(--accent-2)); font-weight:700}
+    .music small{color:var(--muted)}
+
+    .hero{position:relative; z-index:1; padding:70px 24px 40px; text-align:center}
+    .hero h1{font-family:Pacifico, cursive; font-size:52px; line-height:1.1; margin:0 auto 12px; max-width:900px;}
+    .hero p{color:var(--muted); margin:0 auto; max-width:740px}
+
+    .cta{
+      margin:26px auto 10px; display:flex; gap:14px; justify-content:center; flex-wrap:wrap
+    }
+    .btn{border:none; border-radius:999px; padding:14px 22px; cursor:pointer; font-weight:800; letter-spacing:.3px; box-shadow:var(--shadow)}
+    .btn-primary{background:linear-gradient(135deg, var(--accent), var(--accent-2)); color:white}
+    .btn-ghost{background:transparent; color:var(--text); border:1px solid rgba(255,255,255,.12)}
+
+    .countdown{margin:28px auto 0; width:fit-content; display:flex; gap:14px; background:var(--glass); padding:10px 14px; border-radius:999px; border:1px solid rgba(255,255,255,.08); box-shadow:var(--shadow)}
+    .countdown .cell{min-width:70px; text-align:center}
+    .countdown .num{font-size:22px; font-weight:800}
+    .countdown .lbl{font-size:12px; color:var(--muted)}
+
+    section{position:relative; z-index:1; padding:32px 20px}
+
+    .grid{display:grid; gap:18px}
+    @media(min-width:800px){
+      .grid{grid-template-columns:1.2fr 1fr}
+    }
+
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:var(--radius); box-shadow:var(--shadow); overflow:hidden
+    }
+    .card .head{display:flex; align-items:center; gap:10px; padding:18px}
+    .card .head h3{margin:0; font-size:18px}
+    .card .body{padding:0 18px 18px}
+
+    .gallery{display:grid; grid-template-columns:repeat(6, minmax(120px,1fr)); gap:8px; padding:8px}
+    .gallery .img{position:relative; padding-top:120%; border-radius:18px; overflow:hidden; background:linear-gradient(135deg,#2b2b40,#1b1b28)}
+    .gallery .img img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:saturate(1.1)}
+
+    .note{font-size:16px; line-height:1.6}
+
+    .floating-hearts{position:fixed; inset:0; pointer-events:none; z-index:3}
+
+    .footer{padding:40px 20px 70px; text-align:center; color:var(--muted)}
+
+    .tag{display:inline-flex; gap:8px; align-items:center; padding:8px 12px; border-radius:999px; background:var(--glass); border:1px solid rgba(255,255,255,.08); margin:10px}
+
+    .surprise{
+      display:grid; place-items:center; padding:26px; text-align:center
+    }
+    .gift{
+      --g:#ff7cc8; display:inline-grid; place-items:center; width:140px; height:120px; border-radius:18px; background:linear-gradient(160deg,#ff9ed6,#ff6ebe);
+      box-shadow:var(--shadow); position:relative; cursor:pointer;
+    }
+    .gift:before, .gift:after{content:""; position:absolute; background:rgba(255,255,255,.9)}
+    .gift:before{width:16px; height:100%; left: calc(50% - 8px)}
+    .gift:after{left: calc(50% - 8px);}
+    .lid{position:absolute; top:-16px; width:120px; height:30px; border-radius:12px; background:linear-gradient(160deg,#ffd1e9,#ff7cc8); box-shadow:var(--shadow)}
+    .confetti{position:absolute; inset:0; overflow:visible;}
+
+    /* Heart cursor trail */
+    .trail-heart{position:fixed; font-size:14px; pointer-events:none; animation: floatUp 1s ease-out forwards}
+    @keyframes floatUp{ to{ transform:translateY(-40px); opacity:0 } }
+
+    /* Toast */
+    .toast{position:fixed; bottom:16px; left:50%; transform:translateX(-50%); background:var(--glass); border:1px solid rgba(255,255,255,.1); padding:10px 14px; border-radius:999px; backdrop-filter:blur(10px); box-shadow:var(--shadow); display:none}
+
+    a.inline{color:var(--accent-3); text-decoration:none; border-bottom:1px dashed rgba(255,255,255,.25)}
+  </style>
+</head>
+<body>
+  <!-- Starry background -->
+  <div class="stars" aria-hidden="true"></div>
+
+  <header>
+    <div class="brand" aria-label="Site brand">
+      <div class="logo" aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 21s-6-4.35-9-7.5S-1 5 4.5 3.5C7.5 2.7 10 5 12 7.5 14 5 16.5 2.7 19.5 3.5 25 5 21 13.5 18 16.5S12 21 12 21Z" fill="#fff"/></svg>
+      </div>
+      <span>For My Favorite Human</span>
+    </div>
+
+    <div class="music" role="group" aria-label="Music controls">
+      <button id="musicToggle" aria-pressed="false" aria-label="Play birthday music">▶ Play</button>
+      <small id="songLabel">soft piano loop</small>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="home" aria-labelledby="title">
+      <h1 id="title">Happy Birthday, <span id="name">Love</span> 🎂💗</h1>
+      <p class="tag">Made with a lot of love by <strong><span id="fromName">Vaishnavi</span></strong></p>
+      <p>Every second with you is my favorite memory. So I made a tiny website to celebrate <em>you</em> — the laugh, the chaos, and all the heart-eyes. Scroll for a surprise! ✨</p>
+      <div class="cta">
+        <button class="btn btn-primary" id="openCard">Open Your Card ✨</button>
+        <a href="#gallery" class="btn btn-ghost">See our moments</a>
+      </div>
+
+      <!-- Countdown (set your next birthday date in script) -->
+      <div class="countdown" aria-live="polite">
+        <div class="cell"><div class="num" id="d">00</div><div class="lbl">days</div></div>
+        <div class="cell"><div class="num" id="h">00</div><div class="lbl">hours</div></div>
+        <div class="cell"><div class="num" id="m">00</div><div class="lbl">mins</div></div>
+        <div class="cell"><div class="num" id="s">00</div><div class="lbl">secs</div></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="grid">
+        <article class="card" aria-labelledby="msgHead">
+          <div class="head"><h3 id="msgHead">A little love note 💌</h3></div>
+          <div class="body note" id="loveNote">
+            Hey birthday boy, thank you for being my safe place and my favorite adventure. I love your smile, your brain, your jokes (even the bad ones), and the way you make the ordinary feel magical. Today and always — I choose you. ♾️
+          </div>
+        </article>
+
+        <aside class="card" aria-labelledby="factsHead">
+          <div class="head"><h3 id="factsHead">Reasons I adore you</h3></div>
+          <div class="body">
+            <ul>
+              <li>That smile. Instant serotonin.</li>
+              <li>The way you hype me up — 10/10, would recommend.</li>
+              <li>Your kind heart (and elite meme taste).</li>
+              <li>Hand-holder. Secret-keeper. Forever person.</li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="gallery" class="card" aria-labelledby="galleryHead">
+      <div class="head"><h3 id="galleryHead">Mini Gallery 📸</h3></div>
+      <div class="gallery" id="galleryGrid">
+        <!-- Replace image src with your photos -->
+        <div class="img"><img alt=Two friends smiling with their faces close together outdoors on a sunny day surrounded by green trees and grass conveying a joyful and affectionate mood src="c:\Users\Vaishnavi\Downloads\IMG_20241207_193437_037.jpg"/></div>
+        <div class="img"><img alt=Two people sitting together at a small cafe table sharing coffee and smiling warmly at each other with cozy indoor lighting and a relaxed, affectionate atmosphere src="file:///C:/Users/Vaishnavi/Downloads/IMG_20250921_102659_455.webp"/></div>
+        <div class="img"><img alt=Two people gently holding hands with fingers intertwined while sitting together outdoors on a sunny day surrounded by green grass and trees conveying a warm and affectionate mood src="c:\Users\Vaishnavi\Downloads\IMG_20250405_201059_086 (1).jpg"/></div>
+        <div class="img"><img alt=Two people standing close together on a rooftop at night looking at each other with city lights glowing in the background creating a romantic and dreamy atmosphere src="file:///C:/Users/Vaishnavi/Downloads/IMG_20250921_103117_238.webp"></div>
+        <div class= "img"><img alt=Two people walking side by side on a sunlit path through a green park smiling and talking with trees and grass in the background conveying a relaxed and happy mood src="c:\Users\Vaishnavi\Downloads\Snapchat-571407526.jpg"/></div>
+        <div class="img"><img alt=Two people walking along the shoreline with bare feet on a sunny beach with gentle waves in the background smiling and laughing together in a relaxed and joyful atmosphere src="file:///C:/Users/Vaishnavi/Downloads/IMG_20250921_103558_645.webp"/></div>
+      </div>
+    </section>
+
+    <section class="card" aria-labelledby="timelineHead">
+      <div class="head"><h3 id="timelineHead">Our tiny timeline ✨</h3></div>
+      <div class="body">
+        <p class="note" id="timeline">
+          • 2023: First chat → butterflies 🦋<br/>
+          • 2024: Inside jokes and endless calls ☎️<br/>
+          • 2025: Still choosing each other. Every day. 💫
+        </p>
+      </div>
+    </section>
+
+    <section class="card surprise" aria-labelledby="surpriseHead">
+      <h3 id="surpriseHead" style="margin:0 0 8px">Tap the gift for a surprise 🎁</h3>
+      <div class="gift" id="gift">
+        <div class="lid"></div>
+        <canvas class="confetti" id="confetti" width="140" height="120" aria-hidden="true"></canvas>
+      </div>
+      <p id="surpriseText" class="note" style="display:none; max-width:680px; margin-top:16px">
+        You are my favorite hello and hardest goodbye. Here's to more late-night talks, more snacks, more adventures — and a lifetime of birthdays together. 🥂💖
+      </p>
+    </section>
+
+    <section class="footer">
+      <p>Made with ❤ by <span id="fromName2">Vaishnavi</span>. Want the raw message? <a class="inline" href="#" id="copyBtn">Copy to clipboard</a>.</p>
+    </section>
+  </main>
+
+  <div class="floating-hearts" aria-hidden="true"></div>
+  <div class="toast" id="toast" role="status">Copied! Paste it anywhere 💌</div>
+
+  <!-- Audio: royalty-free loop (replace with your song) -->
+  <audio id="song" preload="auto" loop>
+    <source src="https://cdn.pixabay.com/download/audio/2023/02/28/audio_8d6fd35a1c.mp3?filename=romantic-piano-140983.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    // ===== Personalize here =====
+    const BOYFRIEND_NAME = "Navneet"; // 
+    const FROM_NAME = "Vaishnavi";     // 
+    // Next birthday date (local time). Example: 22 September 2025 00:00
+    const NEXT_BDAY = new Date('2025-09-22T00:00:00'); // 
+
+    // ===== Stars background =====
+    const stars = document.querySelector('.stars');
+    for(let i=0;i<120;i++){
+      const s=document.createElement('i');
+      s.style.left = Math.random()*100+'%';
+      s.style.top = Math.random()*100+'%';
+      s.style.opacity = (Math.random()*0.7+0.2).toFixed(2);
+      s.style.transform = `scale(${Math.random()*1.6+0.4})`;
+      stars.appendChild(s);
+    }
+
+    // ===== Personalization text =====
+    document.getElementById('name').textContent = BOYFRIEND_NAME;
+    document.getElementById('fromName').textContent = FROM_NAME;
+    document.getElementById('fromName2').textContent = FROM_NAME;
+
+    // ===== Countdown =====
+    function tick(){
+      const now = new Date();
+      let target = NEXT_BDAY;
+      // If passed, add 1 year
+      if(now > target){
+        target = new Date(target);
+        target.setFullYear(now.getFullYear() + 1);
+      }
+      const diff = target - now;
+      const d = Math.floor(diff/ (1000*60*60*24));
+      const h = Math.floor(diff/ (1000*60*60)) % 24;
+      const m = Math.floor(diff/ (1000*60)) % 60;
+      const s = Math.floor(diff/ 1000) % 60;
+      document.getElementById('d').textContent = String(d).padStart(2,'0');
+      document.getElementById('h').textContent = String(h).padStart(2,'0');
+      document.getElementById('m').textContent = String(m).padStart(2,'0');
+      document.getElementById('s').textContent = String(s).padStart(2,'0');
+    }
+    tick(); setInterval(tick, 1000);
+
+    // ===== Music controls =====
+    const audio = document.getElementById('song');
+    const btn = document.getElementById('musicToggle');
+    btn.addEventListener('click', async () => {
+      if(audio.paused){
+        try{ await audio.play(); btn.textContent = '⏸ Pause'; btn.setAttribute('aria-pressed','true'); }
+        catch(e){ alert('Your browser blocked autoplay. Tap again to play.'); }
+      } else { audio.pause(); btn.textContent = '▶ Play'; btn.setAttribute('aria-pressed','false'); }
+    });
+
+    // ===== Open Card + confetti =====
+    const openCard = document.getElementById('openCard');
+    openCard.addEventListener('click', () => {
+      shootConfettiBurst();
+      gentleHearts(18);
+      document.getElementById('surpriseText').style.display='block';
+      toast('Happy Birthday, '+BOYFRIEND_NAME+'!');
+    });
+
+    // Gift confetti canvas (tap to burst)
+    const gift = document.getElementById('gift');
+    const ctx = document.getElementById('confetti').getContext('2d');
+    let pieces=[]; let raf=null;
+    function spawn(n=40){
+      const rect = gift.getBoundingClientRect();
+      pieces = [...Array(n)].map(()=>({
+        x: Math.random()*rect.width,
+        y: Math.random()*rect.height/2,
+        vx: (Math.random()-.5)*3,
+        vy: -(Math.random()*3+2),
+        g: .06 + Math.random()*.04,
+        r: Math.random()*Math.PI,
+        vr: (Math.random()-.5)*.3,
+        s: 6+Math.random()*8,
+        shape: Math.random()<.5?'rect':'circle'
+      }));
+    }
+    function draw(){
+      const {width:w,height:h} = ctx.canvas;
+      ctx.clearRect(0,0,w,h);
+      pieces.forEach(p=>{
+        p.vy += p.g; p.x += p.vx; p.y += p.vy; p.r += p.vr;
+        ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.r);
+        ctx.fillStyle = ['#ff7cc8','#7c8cff','#ffd166','#7cf7ff'][Math.floor(Math.random()*4)];
+        if(p.shape==='rect'){ ctx.fillRect(-p.s/2,-p.s/2,p.s,p.s/2); }
+        else{ ctx.beginPath(); ctx.arc(0,0,p.s/2,0,Math.PI*2); ctx.fill(); }
+        ctx.restore();
+      });
+      pieces = pieces.filter(p=> p.y < h+20);
+      raf = requestAnimationFrame(draw);
+    }
+    function shoot(){ spawn(60); cancelAnimationFrame(raf); draw(); setTimeout(()=>cancelAnimationFrame(raf), 1500); }
+    gift.addEventListener('click', () => { shoot(); gentleHearts(12); });
+    function shootConfettiBurst(){ shoot(); }
+
+    // ===== Floating hearts =====
+    const heartLayer = document.querySelector('.floating-hearts');
+    function gentleHearts(n=10){
+      for(let i=0;i<n;i++){
+        const h=document.createElement('div');
+        h.textContent='💖';
+        h.style.position='fixed';
+        h.style.left = (Math.random()*100)+'vw';
+        h.style.top = (60 + Math.random()*30)+'vh';
+        h.style.opacity = 0.9;
+        h.style.transform = `translateY(0) scale(${Math.random()*0.8+0.6})`;
+        h.style.transition = 'transform 3s ease-out, opacity 3s ease-out';
+        heartLayer.appendChild(h);
+        requestAnimationFrame(()=>{
+          h.style.transform = 'translateY(-180px) scale(1.2)'; h.style.opacity=0; 
+        });
+        setTimeout(()=>h.remove(), 3200);
+      }
+    }
+
+    // Cute heart trail on pointer
+    window.addEventListener('pointermove', e => {
+      const sp = document.createElement('span');
+      sp.className='trail-heart'; sp.textContent='❤';
+      sp.style.left = e.clientX+'px'; sp.style.top = e.clientY+'px';
+      document.body.appendChild(sp); setTimeout(()=>sp.remove(), 1000);
+    });
+
+    // Copy message
+    document.getElementById('copyBtn').addEventListener('click', (e)=>{
+      e.preventDefault();
+      const html = document.getElementById('loveNote').innerText;
+      navigator.clipboard.writeText(html).then(()=> toast('Copied to clipboard!'));
+    });
+
+    function toast(msg){
+      const t=document.getElementById('toast'); t.textContent=msg; t.style.display='block';
+      clearTimeout(window.__toast); window.__toast = setTimeout(()=>t.style.display='none', 1400);
+    }
+  </script>
+</body>
+</html>
